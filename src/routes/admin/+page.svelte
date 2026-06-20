@@ -27,22 +27,26 @@
           </div>
         {/if}
 
-        <form method="POST" action="?/createProject" use:enhance={() => { loadingProject = true; return async ({ update }) => { loadingProject = false; await update(); }; }} class="space-y-4">
+        <form method="POST" action="?/createProject" enctype="multipart/form-data" use:enhance={() => { loadingProject = true; return async ({ update }) => { loadingProject = false; await update(); }; }} class="space-y-4">
           <div class="grid grid-cols-2 gap-4">
             <input type="text" name="title_en" placeholder="Project Name (EN)" required class="p-4 bg-slate-950 border border-slate-850 rounded-2xl text-left dir-ltr text-sm" />
             <input type="text" name="title_fa" placeholder="نام پروژه (FA)" required class="p-4 bg-slate-950 border border-slate-850 rounded-2xl text-sm" />
           </div>
+          
           <div class="space-y-1">
-    <label class="text-xs text-slate-400 mr-1">تصویر یا کاور پروژه</label>
-    <input type="file" name="project_image" accept="image/*" class="w-full p-3 bg-slate-950 border border-slate-850 rounded-2xl text-sm file:ml-4 file:py-2 file:px-4 file:rounded-xl file:border-0 file:text-xs file:font-semibold file:bg-indigo-600 file:text-white file:cursor-pointer" />
-  </div>
+            <label for="project_image_input" class="text-xs text-slate-400 mr-1">تصویر یا کاور پروژه</label>
+            <input id="project_image_input" type="file" name="project_image" accept="image/*" class="w-full p-3 bg-slate-950 border border-slate-850 rounded-2xl text-sm file:ml-4 file:py-2 file:px-4 file:rounded-xl file:border-0 file:text-xs file:font-semibold file:bg-indigo-600 file:text-white file:cursor-pointer" />
+          </div>
+
           <textarea name="description_en" placeholder="Description (EN)" rows="2" required class="w-full p-4 bg-slate-950 border border-slate-850 rounded-2xl text-left dir-ltr text-sm"></textarea>
           <textarea name="description_fa" placeholder="توضیحات پروژه (FA)" rows="2" required class="w-full p-4 bg-slate-950 border border-slate-850 rounded-2xl text-sm"></textarea>
           <input type="text" name="technologies" placeholder="تکنولوژی‌ها (Svelte, Kotlin, ...)" required class="w-full p-4 bg-slate-950 border border-slate-850 rounded-2xl text-left dir-ltr text-sm" />
+          
           <div class="grid grid-cols-2 gap-4">
             <input type="url" name="github_link" placeholder="GitHub URL" class="p-4 bg-slate-950 border border-slate-850 rounded-2xl text-left dir-ltr text-sm" />
             <input type="url" name="demo_link" placeholder="Live Demo URL" class="p-4 bg-slate-950 border border-slate-850 rounded-2xl text-left dir-ltr text-sm" />
           </div>
+          
           <button type="submit" disabled={loadingProject} class="w-full py-4 bg-indigo-650 hover:bg-indigo-600 border border-indigo-500/30 text-white font-bold rounded-2xl text-sm cursor-pointer transition">
             {loadingProject ? 'در حال ثبت...' : 'انتشار پروژه'}
           </button>
@@ -61,8 +65,8 @@
         <form method="POST" action="?/createUpdate" use:enhance={() => { loadingUpdate = true; return async ({ update }) => { loadingUpdate = false; await update(); }; }} class="space-y-4">
           
           <div class="space-y-1">
-            <label class="text-xs text-slate-400 mr-1">انتخاب پروژه</label>
-            <select name="project_id" required class="w-full p-4 bg-slate-950 border border-slate-850 rounded-2xl text-slate-300 text-sm focus:outline-none">
+            <label for="project_select" class="text-xs text-slate-400 mr-1">انتخاب پروژه</label>
+            <select id="project_select" name="project_id" required class="w-full p-4 bg-slate-950 border border-slate-850 rounded-2xl text-slate-300 text-sm focus:outline-none">
               <option value="">-- پروژه مورد نظر را انتخاب کنید --</option>
               {#each data.projects as proj}
                 <option value={proj.id}>{proj.title_fa} ({proj.title_en})</option>
@@ -71,18 +75,18 @@
           </div>
 
           <div class="space-y-1">
-            <label class="text-xs text-slate-400 mr-1">شماره نسخه</label>
-            <input type="text" name="version" placeholder="e.g. v1.0.4 یا v2.0.0" required class="w-full p-4 bg-slate-950 border border-slate-850 rounded-2xl text-left dir-ltr text-sm" />
+            <label for="version_input" class="text-xs text-slate-400 mr-1">شماره نسخه</label>
+            <input id="version_input" type="text" name="version" placeholder="e.g. v1.0.4 یا v2.0.0" required class="w-full p-4 bg-slate-950 border border-slate-850 rounded-2xl text-left dir-ltr text-sm" />
           </div>
 
           <div class="space-y-1">
-            <label class="text-xs text-slate-400 mr-1">تغییرات اعمال شده (EN - با کاما جدا کنید)</label>
-            <textarea name="changes_en" placeholder="Added dark mode, Fixed UI bugs, Improved speed" rows="2" required class="w-full p-4 bg-slate-950 border border-slate-850 rounded-2xl text-left dir-ltr text-sm"></textarea>
+            <label for="changes_en_input" class="text-xs text-slate-400 mr-1">تغییرات اعمال شده (EN - با کاما جدا کنید)</label>
+            <textarea id="changes_en_input" name="changes_en" placeholder="Added dark mode, Fixed UI bugs, Improved speed" rows="2" required class="w-full p-4 bg-slate-950 border border-slate-850 rounded-2xl text-left dir-ltr text-sm"></textarea>
           </div>
 
           <div class="space-y-1">
-            <label class="text-xs text-slate-400 mr-1">تغییرات اعمال شده (FA - با کاما جدا کنید)</label>
-            <textarea name="changes_fa" placeholder="افزودن حالت تاریک, رفع باگ‌های واکشی داده، بهبود سرعت اپ" rows="2" required class="w-full p-4 bg-slate-950 border border-slate-850 rounded-2xl text-sm"></textarea>
+            <label for="changes_fa_input" class="text-xs text-slate-400 mr-1">تغییرات اعمال شده (FA - با کاما جدا کنید)</label>
+            <textarea id="changes_fa_input" name="changes_fa" placeholder="افزودن حالت تاریک, رفع باگ‌های واکشی داده، بهبود سرعت اپ" rows="2" required class="w-full p-4 bg-slate-950 border border-slate-850 rounded-2xl text-sm"></textarea>
           </div>
 
           <button type="submit" disabled={loadingUpdate} class="w-full py-4 bg-purple-650 hover:bg-purple-600 border border-purple-500/30 text-white font-bold rounded-2xl text-sm cursor-pointer transition">
