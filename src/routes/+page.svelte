@@ -2,6 +2,7 @@
   import { t, locale } from '$lib/i18nStore';
   import Hero from '$lib/components/Hero.svelte';
   import About from '$lib/components/About.svelte';
+  import SpaceBackground3D from '$lib/components/SpaceBackground3D.svelte';
   import Contact from '$lib/components/Contact.svelte'; // ۱. وارد کردن کامپوننت تماس
   
   let { data } = $props(); 
@@ -28,7 +29,7 @@
 
 <main class="max-w-7xl mx-auto px-6">
   <Hero />
-  
+  <SpaceBackground3D />
   <section id="projects" class="py-20">
     <h2 class="text-3xl font-bold mb-12 text-center bg-gradient-to-r from-slate-100 to-slate-400 bg-clip-text text-transparent">
       {$t.projects}
